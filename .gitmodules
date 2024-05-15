@@ -1,0 +1,3 @@
+[submodule "client-gateway-microservice"]
+	path = client-gateway-microservice
+	url = https://github.com/brayan-cordova-microservices-Nestjs/client-gateway-microservice.git
