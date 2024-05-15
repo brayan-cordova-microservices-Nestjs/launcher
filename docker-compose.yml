@@ -17,41 +17,41 @@ services:
             - PORT=3000
             - NATS_SERVERS=nats://nats-server:4222
 
-    products-microservice:
-        build: ./products-microservice
-        volumes:
-            - ./products-microservice/src:/usr/src/app/src # /usr = user, /src = source
-        command: npm run start:dev
-        environment:
-            - PORT=3001
-            - NATS_SERVERS=nats://nats-server:4222
-            - DATABASE_URL=file:./dev.db
-            - TYPE_OF_DATABASE=SQLite
-            - TYPE_OF_ORM=Prisma
+    # products-microservice:
+    #     build: ./products-microservice
+    #     volumes:
+    #         - ./products-microservice/src:/usr/src/app/src # /usr = user, /src = source
+    #     command: npm run start:dev
+    #     environment:
+    #         - PORT=3001
+    #         - NATS_SERVERS=nats://nats-server:4222
+    #         - DATABASE_URL=file:./dev.db
+    #         - TYPE_OF_DATABASE=SQLite
+    #         - TYPE_OF_ORM=Prisma
 
-    orders-microservice:
-        depends_on:
-            - orders-microservice-db
-        build: ./orders-microservice
-        volumes:
-            - ./orders-microservice/src:/usr/src/app/src # /usr = user, /src = source
-        command: npm run start:dev
-        environment:
-            - PORT=3002
-            - NATS_SERVERS=nats://nats-server:4222
-            - DATABASE_URL=postgresql://postgres:postgres@orders-microservice-db:5432/orders-dbs?schema=public
-            - TYPE_OF_DATABASE=PostgreSQL
-            - TYPE_OF_ORM=Prisma
+    # orders-microservice:
+    #     depends_on:
+    #         - orders-microservice-db
+    #     build: ./orders-microservice
+    #     volumes:
+    #         - ./orders-microservice/src:/usr/src/app/src # /usr = user, /src = source
+    #     command: npm run start:dev
+    #     environment:
+    #         - PORT=3002
+    #         - NATS_SERVERS=nats://nats-server:4222
+    #         - DATABASE_URL=postgresql://postgres:postgres@orders-microservice-db:5432/orders-dbs?schema=public
+    #         - TYPE_OF_DATABASE=PostgreSQL
+    #         - TYPE_OF_ORM=Prisma
 
-    orders-microservice-db:
-        container_name: orders_postgresql_database
-        image: postgres:16.2
-        restart: always
-        volumes:
-            - ./orders-microservice/postgres:/var/lib/postgresql/data
-        ports:
-            - ${POSTGRESQL_DATABASE_PORT}:5432
-        environment:
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=postgres
-            - POSTGRES_DB=orders-dbs
+    # orders-microservice-db:
+    #     container_name: orders_postgresql_database
+    #     image: postgres:16.2
+    #     restart: always
+    #     volumes:
+    #         - ./orders-microservice/postgres:/var/lib/postgresql/data
+    #     ports:
+    #         - ${POSTGRESQL_DATABASE_PORT}:5432
+    #     environment:
+    #         - POSTGRES_USER=postgres
+    #         - POSTGRES_PASSWORD=postgres
+    #         - POSTGRES_DB=orders-dbs
